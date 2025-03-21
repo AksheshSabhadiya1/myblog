@@ -1,0 +1,70 @@
+<nav class="navbar navbar-expand-lg bg-dark border-bottom border-body bg-body-tertiary" data-bs-theme="dark">
+  <div class="container-fluid">
+    <a class="navbar-brand text-white" href="/">MyBlog</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    
+    <div class="collapse navbar-collapse" id="navbarNavDropdown">
+      <ul class="navbar-nav me-auto">
+        <li class="nav-item">
+          <a class="nav-link active text-white" aria-current="page" href="/">Home</a>
+        </li>
+        <% if (locals.user) { %>
+          <li class="nav-item">
+            <a class="nav-link text-white" href="/blog/addBlog">Add Blog</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link text-white" href="/blog/myBlog/<%= user._id %>">My Blog</a>
+          </li>
+        <% } else { %>
+          <li class="nav-item">
+            <a class="nav-link text-white" href="/user/signup">Create Account</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link text-white" href="/user/signin">Signin</a>
+          </li>
+        <% } %>
+      </ul>
+
+      <% if (locals.user) { %>
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item dropdown d-flex align-items-center">
+            <img src="<%= user.profileImage %>" class="rounded-circle border me-2" width="40" height="40" alt="Profile Image" />
+            <a class="nav-link dropdown-toggle text-white" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              <%= locals.user.fullName %>
+            </a>
+            <ul class="dropdown-menu dropdown-menu-end">
+              <li><a class="dropdown-item" href="/user/logout">Logout</a></li>
+              <li><a class="dropdown-item" href="/user/delete/<%= user._id %>">Delete User</a></li>
+            </ul>
+          </li>
+        </ul>
+      <% } %>
+    </div>
+  </div>
+</nav>
+
+<% if (locals.error) { %>
+  <div class="container mt-2">
+    <div class="alert alert-danger" role="alert">
+      <%= locals.error %>
+    </div>
+  </div>
+<% } %>
+
+<% if (locals.success) { %>
+  <div class="container mt-2">
+    <div class="alert alert-success" role="alert">
+      <%= locals.success %>
+    </div>
+  </div>
+<% } %>
+
+<% if (locals.msg) { %>
+  <div class="container mt-2">
+    <div class="alert alert-danger" role="alert">
+      <%= locals.msg %>
+    </div>
+  </div>
+<% } %>
