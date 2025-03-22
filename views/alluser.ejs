@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <%- include('../partials/head') %>
+  <title>All Users</title>
+</head>
+<body class="bg-dark-subtle">
+  <%- include('../partials/nav') %>
+  <div class="container py-3">
+    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4">
+      <% if (locals.admin) { %>       
+      <% alluser?.forEach(user => { %>
+        <div class="col">
+          <div class="card h-100 shadow-sm">
+            <div class="text-center">
+            <img src="<%= user.profileImage %>" class="rounded-circle border d-block m-2 me-2" width="80" height="80" alt="Profile Image" />
+            </div>
+            <div class="card-body">
+              <strong>FullName:</strong><p class="card-title"><%= user.fullName %></p>
+              <strong>Email:</strong><p class="card-title"><%= user.email %></p>
+              <strong>Role:</strong><p class="card-title"><%= user.role %></p>
+              <strong>isApproved:</strong><p class="card-title"><%= user.isApproved %></p>
+              <a href="/admin/isapproved/<%= user._id %>" class="btn btn-primary">Approve</a>
+              <a href="/admin/delete/<%= user._id %>" class="btn btn-danger">Delete</a>
+            </div>
+          </div>
+        </div>
+      <% }) %>
+      <% } %>
+    </div>
+  </div>
+  <%- include('../partials/script') %>
+</body>
+</html>

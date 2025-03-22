@@ -39,7 +39,7 @@ const userLogout = (req, res)=>{
 }
 
 const deleteUser = async(req, res)=>{
-  await Blog.deleteMany({ createdBy: req.params.userid})
+  await Blog.deleteMany({ createdBy: req.params.userid })
   await Comment.deleteMany({ createdBy: req.params.userid })
   await User.deleteOne({ _id: req.params.userid })
 
