@@ -21,9 +21,17 @@
           <li class="nav-item">
             <a class="nav-link text-white" href="/user/signup">Create Account</a>
           </li>
-          <li class="nav-item">
-            <a class="nav-link text-white" href="/user/signin">Signin</a>
-          </li>
+            <li class="nav-item">
+              <a class="nav-link text-white" href="/user/signin">Signin</a>
+            </li>
+        <% } %>
+        <% if (locals.admin) { %>
+            <li class="nav-item">
+            <a class="nav-link text-white" href="/admin/alluser">Users</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link text-white" href="/admin/allblog">Blogs</a>
+            </li>
         <% } %>
       </ul>
 

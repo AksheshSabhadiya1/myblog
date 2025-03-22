@@ -29,6 +29,10 @@ const userSchema = new Schema(
       enum: ["User", "Admin"],
       default: "User",
     },
+    isApproved: {
+      type: Boolean,
+      default: false,
+    }
   },
   { timestamp: true }
 );
