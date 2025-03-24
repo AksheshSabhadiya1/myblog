@@ -10,7 +10,6 @@ const adminSchema = new Schema(
     email: {
       type: String,
       required: true,
-      unique: true,
     },
     blogId: [{
       type: Schema.Types.ObjectId,
@@ -30,7 +29,7 @@ const adminSchema = new Schema(
 );
 
 
-const Admin = model("superAdmin", adminSchema)
+const Admin = model("admin", adminSchema)
 
 
 module.exports = Admin

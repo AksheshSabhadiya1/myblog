@@ -23,7 +23,7 @@ userRouter.post("/signin", postuserSignin);
 userRouter.get("/signup", getuserSignup);
 userRouter.post("/signup", upload.single('profileImage'), postuserSignup);
 
-userRouter.get('/logout', userLogout)
+userRouter.get('/logout/:userid', userLogout)
 
 userRouter.get('/delete/:userid', deleteUser)
 

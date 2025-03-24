@@ -30,26 +30,11 @@ app.use("/user", userRouter);
 app.use("/blog", blogRouter);
 app.use("/admin", adminRouter)
 
-app.get('/', async(req, res, next)=>{
-
-  const admin = await Admin.findOne({})
-  const alluserids = (await User.find({})).map(user => user._id)
-  const allblogsids = (await Blog.find({})).map(blog => blog._id)
-
-  if(!admin){
-    await Admin.create({
-      fullName: 'superadmin',
-      email: 'superadmin@gmail.com',
-      blogId: allblogsids,
-      createdBy: alluserids,
-    }) 
-  }
-  next()
-})
 
 app.get("/", async (req, res) => {
   const allblogs = await Blog.find({})
-  res.render("homepage", { user: req.user, blogs: allblogs });
+  const user = req.user ? await User.findOne({_id: req.user._id}) : req.user 
+  res.render("homepage", { user: user, blogs: allblogs }); 
 });
 
 

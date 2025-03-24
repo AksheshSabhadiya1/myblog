@@ -2,60 +2,27 @@
 <html lang="en">
 <head>
   <%- include('../partials/head') %>
-  <% if (locals.admin) { %>
-    <title>Adminpage</title>
-  <% } else { %>
   <title>Homepage</title>
-  <% } %>
 </head>
 <body class="bg-dark-subtle">
   <%- include('../partials/nav') %>
   <div class="container py-3">
     <% if (locals.user) { %>
-      <h1 class="text-center mb-4">Latest Blogs</h1>
+      <h1 class="text-center mb-4">Welcome to MyBlog</h1>
     <% } %>
     <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4">
-      <% if (locals.user) { %>       
-      <% blogs?.forEach(blog => { %>
-        <div class="col">
-          <div class="card h-100 shadow-sm">
-            <img src="<%= blog.coverImageURL %>" class="card-img-top" height="180px" alt="Blog Image">
-            <div class="card-body">
-              <h5 class="card-title"><%= blog.title %></h5>
-              <a href="/blog/<%= blog._id %>" class="btn btn-primary">View</a>
-            </div>
-          </div>
-        </div>
-      <% }) %>
-      <% } else if (locals.admin) { %>
-          <div class="col">
+      <% if (locals.user) { %>
+        <% blogs?.forEach(blog => { %>
+          <div class="col text-center">
             <div class="card h-100 shadow-sm">
-              <div class="text-center">
-              <img src="/images/default_profile.png" class="rounded-circle border mt-2 me-2 p-2" width="100" height="100" alt="Profile Image" />
-              </div>
+              <img src="<%= blog.coverImageURL %>" class="card-img-top" height="180px" alt="Blog Image">
               <div class="card-body">
-                <strong>Total User: </strong><p class="card-title"><%= allusers.length %></p>
-                <a href="/admin/alluser/<%= allusers._id %>" class="btn btn-primary">View All User</a>
-<<<<<<< HEAD
-              </div> 
-=======
-              </div>
->>>>>>> a2c7dfffdfbfc6349d320a6b08042fa38027cd0f
-            </div>
-          </div>
-        <div class="container-fluid mt-4">
-          <% allblogs?.forEach(blog => { %>
-            <div class="col">
-              <div class="card h-100 shadow-sm">
-                <img src="<%= blog.coverImageURL %>" class="card-img-top" height="180px" alt="Blog Image">
-                <div class="card-body">
-                  <h5 class="card-title"><%= blog.title %></h5>
-                  <a href="/blog/<%= blog._id %>" class="btn btn-primary">View</a>
-                </div>
+                <h5 class="card-title text-capitalize"><%= blog.title %></h5>
+                <a href="/blog/<%= blog._id %>" class="btn btn-primary">View</a>
               </div>
             </div>
-          <% }) %>
           </div>
+        <% }) %>
       <% } %>
     </div>
   </div>

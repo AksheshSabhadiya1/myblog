@@ -6,29 +6,36 @@
 </head>
 <body class="bg-dark-subtle">
   <%- include('../partials/nav') %>
-  <div class="container py-3">
-    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4">
+
+  <div class="container py-4">
+    <div class="row g-4">
       <% if (locals.admin) { %>       
-      <% alluser?.forEach(user => { %>
-        <div class="col">
-          <div class="card h-100 shadow-sm">
-            <div class="text-center">
-            <img src="<%= user.profileImage %>" class="rounded-circle border d-block m-2 me-2" width="80" height="80" alt="Profile Image" />
-            </div>
-            <div class="card-body">
-              <strong>FullName:</strong><p class="card-title"><%= user.fullName %></p>
-              <strong>Email:</strong><p class="card-title"><%= user.email %></p>
-              <strong>Role:</strong><p class="card-title"><%= user.role %></p>
-              <strong>isApproved:</strong><p class="card-title"><%= user.isApproved %></p>
-              <a href="/admin/isapproved/<%= user._id %>" class="btn btn-primary">Approve</a>
-              <a href="/admin/delete/<%= user._id %>" class="btn btn-danger">Delete</a>
+        <% alluser?.forEach(user => { %>
+          <div class="col-12 col-sm-6 mb-0 col-md-4 col-lg-3">
+            <div class="card h-100 shadow-sm">
+              <div class="card-header bg-white text-center position-relative">
+                <img src="<%= user.profileImage %>" class="rounded-circle border border-secondary" width="80" height="80" alt="Profile Image">
+                <a href="/admin/delete/<%= user._id %>" class="btn btn-sm bg-danger-subtle position-absolute top-0 end-0 m-2">❌</a>
+              </div>
+              <div class="card-body">
+                <p><strong>Full Name:</strong> <%= user.fullName %></p>
+                <p><strong>Email:</strong> <%= user.email %></p>
+                <p><strong>Role:</strong> <%= user.role %></p>
+                <p>
+                  <strong>isApproved:</strong>
+                  <a href="/admin/isapproved/<%= user._id %>" class="btn btn-sm <%= user.isApproved ? 'btn-success' : 'btn-warning' %>">
+                    <%= user.isApproved ? 'Yes ✅' : 'No ❌' %>
+                  </a>
+                </p>
+                <div class="d-flex"><strong class="mt-2">isLogin:</strong><p class="<%= user.isLogin ? 'bg-success text-white bg-opacity-75' : 'bg-warning bg-opacity-50' %> rounded fst-normal text-center mx-1 m-1 px-2 py-1 mb-0"><%= user.isLogin ? 'Yes ✅' : 'No ❌' %></p> </div>
+              </div>
             </div>
           </div>
-        </div>
-      <% }) %>
+        <% }) %>
       <% } %>
     </div>
   </div>
+
   <%- include('../partials/script') %>
 </body>
 </html>

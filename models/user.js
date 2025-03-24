@@ -32,6 +32,10 @@ const userSchema = new Schema(
     isApproved: {
       type: Boolean,
       default: false,
+    },
+    isLogin:{
+      type: Boolean,
+      default: false
     }
   },
   { timestamp: true }

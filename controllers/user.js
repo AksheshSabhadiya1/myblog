@@ -9,7 +9,7 @@ const getuserSignup = (req, res) => {
 
 const postuserSignup = async(req, res) => {
   const { fullName, email, password, role } = req.body;
-  const imagepath = req.file ? path.resolve(`/profile/${req.file.filename}`) : '/images/default_profile.png'
+  const imagepath = req.file ? `/profile/${req.file.filename}` : '/images/default_profile.png'
   await User.create({
     fullName,
     email,
@@ -26,15 +26,23 @@ const getuserSignin = (req, res) => {
 
 const postuserSignin = async (req, res) => {
   const { email, password } = req.body;
-  try {
-    const token = await User.matchPasswordAndGenerateToken(email, password);
-    return res.cookie("token", token).redirect("/");    
-  } catch (error) {
-    return res.status(401).render('signin',{ error: "Invalid Email or Password"})
+  const user = await User.findOne({email: email})
+  if(user.isApproved === true) {
+    try {
+      const token = await User.matchPasswordAndGenerateToken(email, password);
+      if(token) await User.findOneAndUpdate({email: email}, {isLogin: true})
+      return res.cookie("token", token).render("homepage", {success: "User Signin Successfully"});    
+    } catch (error) {
+      return res.status(401).render('signin',{ error: "Invalid Email or Password"})
+    }
+  } else {
+    return res.render('homepage',{ waitingMsg: "Wait for Admin Approval" })
   }
 }
 
-const userLogout = (req, res)=>{
+const userLogout = async(req, res)=>{
+  await User.findOneAndUpdate({ _id: req.params.userid }, {isLogin: false} ) 
+
   return res.clearCookie('token').redirect('/')
 }
 
