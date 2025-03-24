@@ -1,7 +1,7 @@
 const Blog = require('../models/blog')
 const Comment = require('../models/comment')
 const User = require('../models/user')
-
+const path = require('path')
 
 const getuserSignup = (req, res) => {
   return res.render("signup");
@@ -9,7 +9,7 @@ const getuserSignup = (req, res) => {
 
 const postuserSignup = async(req, res) => {
   const { fullName, email, password, role } = req.body;
-  const imagepath = req.file ? `/profile/${req.file.filename}` : '/images/default_profile.png'
+  const imagepath = req.file ? path.resolve(`/profile/${req.file.filename}`) : '/images/default_profile.png'
   await User.create({
     fullName,
     email,

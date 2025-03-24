@@ -44,6 +44,9 @@
             </a>
             <ul class="dropdown-menu dropdown-menu-end">
               <li><a class="dropdown-item" href="/user/logout">Logout</a></li>
+              <% if (locals.user.role === 'User') { console.log(locals.user) %>
+                  <li><a class="dropdown-item" href="/admin">Admin panel</a></li>
+              <% } %>
               <li><a class="dropdown-item" href="/user/delete/<%= user._id %>">Delete User</a></li>
             </ul>
           </li>
