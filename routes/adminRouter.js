@@ -3,12 +3,14 @@ const adminRouter = express.Router()
 const Admin = require('../models/admin');
 const User = require('../models/user');
 const Blog = require('../models/blog');
+const Comment = require('../models/comment')
 
 
 adminRouter.get('/', async(req, res, next)=>{
   const admindata = await Admin.find({})
   const allusers = await User.find({})
   const allblogs = await Blog.find({})
+  const allComment = await Comment.find({})
 
   if(!admindata){
       await Admin.create({
@@ -21,7 +23,7 @@ adminRouter.get('/', async(req, res, next)=>{
     await Admin.findOneAndUpdate(admindata._id, { createdBy: allusers, blogId: allblogs} )
   }
 
-  return res.render("adminpage", {admin: admindata, allusers, allblogs});
+  return res.render("adminpage", {admin: admindata, allusers, allblogs, allComment});
 })
 
 adminRouter.get('/signup',(req, res) => {
@@ -41,8 +43,9 @@ adminRouter.get('/allblog', async(req, res)=>{
   const admindata = await Admin.findOne({})
   const allblog = await Blog.find({})
   const alluser = await User.find({})
+  const allComment = await Comment.find({})
 
-  return res.render("allblog", {admin: admindata, allblog: allblog, alluser: alluser});
+  return res.render("allblog", {admin: admindata, allblog: allblog, alluser: alluser, allComment: allComment});
 } )
 
 adminRouter.get('/isapproved/:userid', async(req, res)=>{

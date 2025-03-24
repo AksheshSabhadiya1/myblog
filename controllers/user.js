@@ -31,10 +31,10 @@ const postuserSignin = async (req, res) => {
     try {
       const token = await User.matchPasswordAndGenerateToken(email, password);
       if(token) await User.findOneAndUpdate({email: email}, {isLogin: true})
-      return res.cookie("token", token).render("homepage", {success: "User Signin Successfully"});    
+      return res.cookie("token", token).redirect("/");    
     } catch (error) {
       return res.status(401).render('signin',{ error: "Invalid Email or Password"})
-    }
+    } 
   } else {
     return res.render('homepage',{ waitingMsg: "Wait for Admin Approval" })
   }
