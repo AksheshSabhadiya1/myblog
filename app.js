@@ -5,10 +5,9 @@ const port = 8005;
 const path = require("path");
 const userRouter = require("./routes/userRouter");
 const blogRouter = require("./routes/blogRouter");
-const adminRouter = require('./routes/adminRouter');
+const superadminRouter = require('./routes/superadminRouter');
 const mongoose = require("mongoose");
 const Blog = require("./models/blog");
-const Admin = require('./models/admin');
 const User = require('./models/user');
 const cookieParser = require("cookie-parser");
 const { checkAuthCookie } = require("./middleware/auth");
@@ -28,7 +27,7 @@ app.use(express.static(path.resolve("./public")))
 
 app.use("/user", userRouter);
 app.use("/blog", blogRouter);
-app.use("/admin", adminRouter)
+app.use("/superadmin", superadminRouter)
 
 
 app.get("/", async (req, res) => {

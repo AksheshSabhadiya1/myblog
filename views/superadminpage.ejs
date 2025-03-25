@@ -2,15 +2,14 @@
 <html lang="en">
 <head>
   <%- include('../partials/head') %>
-    <title>Adminpage</title>
+    <title>SuperAdmin</title>
 </head>
 <body class="bg-dark-subtle">
-  <%- include('../partials/nav') %>
+  <%- include('../partials/superadminnav') %>
   <div class="container py-3">
     <div class="text-center">
     <div class="row row-cols-2 row-cols-sm-2 row-cols-md-2 row-cols-lg-3 g-4 ">
-      <!-- <div class="d-flex justify-content-evenly"> -->
-      <% if (locals.admin) { %>
+      <% if (locals.superadmin) { %>
           <div class="col">
             <div class="card h-100 shadow-sm">
               <div class="text-center">
@@ -18,7 +17,7 @@
               </div>
               <div class="card-body">
                 <strong>Total User: </strong><p class="card-title"><%= allusers.length %></p>
-                <a href="/admin/alluser" class="btn btn-primary">View</a>
+                <a href="/superadmin/alluser" class="btn btn-primary">View</a>
               </div>
             </div>
           </div>
@@ -30,7 +29,7 @@
                   </div>
                 <div class="card-body">
                   <strong>Total Blog: </strong><p class="card-title"><%= allblogs.length %></p>
-                  <a href="/admin/allblog" class="btn btn-primary">View</a>
+                  <a href="/superadmin/allblog" class="btn btn-primary">View</a>
                 </div>
               </div>
             </div>
@@ -39,11 +38,11 @@
             <div class="col">
               <div class="card h-100 shadow-sm">
                 <div class="text-center">
-                  <img src="/images/blog.jpg" class="rounded border border-black mt-4 p-3" width="100" height="100" alt="Profile Image" />
+                  <img src="/images/comment_image.jpg" class="rounded border border-black mt-4" width="100" height="100" alt="Profile Image" />
                   </div>
                 <div class="card-body">
                   <strong>Total Comments: </strong><p class="card-title"><%= allComment.length %></p>
-                  <a href="/admin/allblog" class="btn btn-primary">View</a>
+                  <a href="/superadmin/allblog" class="btn btn-primary">View</a>
                 </div>
               </div>
             </div>
