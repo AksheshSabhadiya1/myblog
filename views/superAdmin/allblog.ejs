@@ -7,11 +7,7 @@
 </head>
 
 <body class="bg-dark-subtle">
-<<<<<<< HEAD:views/superAdmin/allblog.ejs
   <%- include('../../partials/superadminnav') %>
-=======
-  <%- include('../partials/superadminnav') %>
->>>>>>> d43ff9a6721140720cc03a379d613365563be951:views/allblog.ejs
   <div class="container py-3">
     <div class="row row-cols-3 row-cols-sm-1 row-cols-md-1 row-cols-lg-2 g-3">
       <% if (locals.superadmin) { %>
@@ -29,11 +25,7 @@
             created by
           </h5>
           <% alluser?.forEach( user=> { %> <% if( user._id.toString()===blog.createdBy.toString()) { %>
-<<<<<<< HEAD:views/superAdmin/allblog.ejs
           <div class="card shadow-sm bg-dark p-2 w-100"  style="--bs-bg-opacity: .15;">
-=======
-          <div class="card shadow-sm bg-dark-subtle p-2 w-100">
->>>>>>> d43ff9a6721140720cc03a379d613365563be951:views/allblog.ejs
             <div class="d-flex">
               <img src="<%= user.profileImage %>" class="rounded-circle border border-secondary p-1" width="60" height="60" alt="Profile Image" />
               <div>
