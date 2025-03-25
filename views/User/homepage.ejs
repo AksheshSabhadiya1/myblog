@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <%- include('../partials/head') %>
+  <%- include('../../partials/head') %>
   <title>Homepage</title>
 </head>
 <body class="bg-dark-subtle">
-  <%- include('../partials/nav') %>
+  <%- include('../../partials/nav') %>
   <div class="container py-3">
     <% if (locals.user) { %>
       <h1 class="text-center mb-4">Welcome to MyBlog</h1>
@@ -26,6 +26,6 @@
       <% } %>
     </div>
   </div>
-  <%- include('../partials/script') %>
+  <%- include('../../partials/script') %>
 </body>
 </html>

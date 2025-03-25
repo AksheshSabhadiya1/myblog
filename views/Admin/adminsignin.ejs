@@ -5,12 +5,12 @@
   <title>Signin</title>
 </head>
 <body class="bg-dark-subtle">
-  <%- include('../partials/nav') %>
+  <%- include('../partials/superadminnav') %>
 
   <div class="container d-flex justify-content-center mt-5">
     <div class="card shadow-lg p-4" style="max-width: 400px; width: 100%;">
       <h2 class="text-center text-primary mb-4">Sign In</h2>
-      <form action="/user/signin" method="post">
+      <form action="/superadmin/signin" method="post">
         <div class="mb-3">
           <label for="exampleInputEmail1" class="form-label">Email address</label>
           <input type="email" class="form-control" id="exampleInputEmail1" name="email" aria-describedby="emailHelp" required>

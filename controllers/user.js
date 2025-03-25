@@ -27,6 +27,9 @@ const getuserSignin = (req, res) => {
 const postuserSignin = async (req, res) => {
   const { email, password } = req.body;
   const user = await User.findOne({email: email})
+
+  if(!user) return res.status(401).render('signup',{ error: "User Not Found"})
+
   if(user.isApproved === true) {
     try {
       const token = await User.matchPasswordAndGenerateToken(email, password);
@@ -36,7 +39,7 @@ const postuserSignin = async (req, res) => {
       return res.status(401).render('signin',{ error: "Invalid Email or Password"})
     } 
   } else {
-    return res.render('homepage',{ waitingMsg: "Wait for Admin Approval" })
+    return res.render('homepage',{ waitingMsg: "Wait for superadmin Approval" })
   }
 }
 

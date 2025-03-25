@@ -1,7 +1,7 @@
 const { Schema, model } = require('mongoose')
 
 
-const adminSchema = new Schema(
+const superadminSchema = new Schema(
   {
     fullName: {
       type: String,
@@ -10,6 +10,10 @@ const adminSchema = new Schema(
     email: {
       type: String,
       required: true,
+    },
+    profileImage: {
+      type: String,
+      default: "/images/profile_avatar.png",
     },
     blogId: [{
       type: Schema.Types.ObjectId,
@@ -21,15 +25,15 @@ const adminSchema = new Schema(
     }],    
     role: {
       type: String,
-      enum: ["User", "Admin"],
-      default: "Admin",
+      enum: ["Superadmin"],
+      default: "Superadmin",
     },
   },
   { timestamp: true }
 );
 
 
-const Admin = model("admin", adminSchema)
+const Superadmin = model("supersuperadmin", superadminSchema)
 
 
-module.exports = Admin
+module.exports = Superadmin

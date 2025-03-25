@@ -7,42 +7,20 @@
     </button>
 
     <div class="collapse navbar-collapse" id="navbarNavDropdown">
-      <% if(!locals.superadmin) { %>
+      
+      <% if(!locals.user) { %>
       <ul class="navbar-nav me-auto">
         <li class="nav-item">
-          <a class="nav-link active text-white" aria-current="page" href="/">Home</a>
+          <a class="nav-link active text-white" aria-current="page" href="/superadmin">SuperAdminHome</a>
         </li>
-        <% if (locals.user && !locals.superadmin) { %>
-          <li class="nav-item">
-              <a class="nav-link text-white" href="/blog/addBlog">Add Blog</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link text-white" href="/blog/myBlog/<%= user._id %>">My Blog</a>
-          </li>
-          <% } else if (!locals.user && !locals.superadmin) { %>
-            <li class="nav-item">
-              <a class="nav-link text-white" href="/user/signup">Create Account</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link text-white" href="/user/signin">Signin</a>
-            </li>
-            <% } %>
-          </ul>
-          <% } %>
-
-      <!-- <% if(locals.superadmin) { %>
-      <ul class="navbar-nav me-auto">
-        <li class="nav-item">
-          <a class="nav-link active text-white" aria-current="page" href="/superadmin">superadminHome</a>
-        </li>
-        <% if (locals.superadmin && !locals.user) { %>
+        <% if (locals.superadmin) { %>
           <li class="nav-item">
               <a class="nav-link text-white" href="/superadmin/alluser">Users</a>
           </li>
           <li class="nav-item">
             <a class="nav-link text-white" href="/superadmin/allblog">Blogs</a>
           </li>
-          <% } else if (!locals.superadmin && !locals.user) { %>
+          <% } else { %>
             <li class="nav-item">
               <a class="nav-link text-white" href="/superadmin/signup">Create Account</a>
             </li>
@@ -51,24 +29,7 @@
             </li>
             <% } %>
           </ul>
-          <% } %> -->
-
-      <% if (locals.user) { %>
-        <ul class="navbar-nav ms-auto">
-          <li class="nav-item dropdown d-flex align-items-center">
-            <img src="<%= user.profileImage %>" class="rounded-circle border me-2" width="40" height="40"
-              alt="Profile Image" />
-            <a class="nav-link dropdown-toggle text-white" href="#" role="button" data-bs-toggle="dropdown"
-              aria-expanded="false">
-              <%= user.fullName %>
-            </a>
-            <ul class="dropdown-menu dropdown-menu-end">
-              <li><a class="dropdown-item" href="/user/logout/<%= user._id %>">Logout</a></li>
-              <li><a class="dropdown-item bg-danger text-white rounded" href="/user/delete/<%= user._id %>">Delete User</a></li>
-            </ul>
-          </li>
-        </ul>
-        <% } %>
+          <% } %>
     </div>
   </div>
 </nav>

@@ -1,21 +1,21 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <%- include('../partials/head') %>
+  <%- include('../../partials/head') %>
   <title>All Users</title>
 </head>
 <body class="bg-dark-subtle">
-  <%- include('../partials/nav') %>
+  <%- include('../../partials/superadminnav') %>
 
   <div class="container py-4">
     <div class="row g-4">
-      <% if (locals.admin) { %>       
+      <% if (locals.superadmin) { %>       
         <% alluser?.forEach(user => { %>
           <div class="col-12 col-sm-6 mb-0 col-md-4 col-lg-3">
             <div class="card h-100 shadow-sm">
               <div class="card-header bg-white text-center position-relative">
                 <img src="<%= user.profileImage %>" class="rounded-circle border border-secondary" width="80" height="80" alt="Profile Image">
-                <a href="/admin/delete/<%= user._id %>" class="btn btn-sm bg-danger-subtle position-absolute top-0 end-0 m-2">❌</a>
+                <a href="/superadmin/delete/<%= user._id %>" class="btn btn-sm bg-danger-subtle position-absolute top-0 end-0 m-2">❌</a>
               </div>
               <div class="card-body">
                 <p><strong>Full Name:</strong> <%= user.fullName %></p>
@@ -23,7 +23,7 @@
                 <p><strong>Role:</strong> <%= user.role %></p>
                 <p>
                   <strong>isApproved:</strong>
-                  <a href="/admin/isapproved/<%= user._id %>" class="btn btn-sm <%= user.isApproved ? 'btn-success' : 'btn-warning' %>">
+                  <a href="/superadmin/isapproved/<%= user._id %>" class="btn btn-sm <%= user.isApproved ? 'btn-success' : 'btn-warning' %>">
                     <%= user.isApproved ? 'Yes ✅' : 'No ❌' %>
                   </a>
                 </p>
@@ -36,6 +36,6 @@
     </div>
   </div>
 
-  <%- include('../partials/script') %>
+  <%- include('../../partials/script') %>
 </body>
 </html>
