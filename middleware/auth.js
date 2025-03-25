@@ -19,4 +19,22 @@ const checkAuthCookie = (cookieValue) => {
 }
 
 
-module.exports = { checkAuthCookie }
+const checkAdminCookie = (cookieValue) => {
+  return (req, res, next) => {
+    const admintoken = req.cookies[cookieValue]
+
+    if(!admintoken) return next()
+
+    try {
+      const payload = validateToken(admintoken)
+      req.admin = payload
+    } catch (error) {
+      console.log(error);
+    }
+
+    return next()
+  }
+}
+
+
+module.exports = { checkAuthCookie, checkAdminCookie}

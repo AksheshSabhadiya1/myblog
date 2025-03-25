@@ -33,7 +33,7 @@ const superadminSchema = new Schema(
 );
 
 
-const Superadmin = model("supersuperadmin", superadminSchema)
+const SuperAdmin = model("superadmin", superadminSchema)
 
 
-module.exports = Superadmin
+module.exports = SuperAdmin

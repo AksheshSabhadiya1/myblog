@@ -1,16 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <%- include('../partials/head') %>
+  <%- include('../../partials/head') %>
   <title>Signup</title>
 </head>
 <body class="bg-dark-subtle">
-  <%- include('../partials/superadminnav') %>
+  <%- include('../../partials/adminnav') %>
 
   <div class="container d-flex justify-content-center align-items-center vh-100">
     <div class="card shadow-lg p-4" style="max-width: 400px; width: 100%;">
       <h2 class="text-center text-primary mb-4">Sign Up</h2>
-      <form action="/superadmin/signup" method="post" enctype="multipart/form-data">
+      <form action="/admin/signup" method="post">
         <div class="mb-3">
           <label for="fullName" class="form-label">Full Name</label>
           <input type="text" class="form-control" id="fullName" name="fullName" required>
@@ -33,6 +33,6 @@
     </div>
   </div>
 
-  <%- include('../partials/script') %>
+  <%- include('../../partials/script') %>
 </body>
 </html>

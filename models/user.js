@@ -26,7 +26,7 @@ const userSchema = new Schema(
     },
     role: {
       type: String,
-      enum: ["User", "superadmin"],
+      enum: ["User"],
       default: "User",
     },
     isApproved: {
@@ -36,6 +36,10 @@ const userSchema = new Schema(
     isLogin:{
       type: Boolean,
       default: false
+    },
+    adminId: {
+      type: Schema.Types.ObjectId,
+      ref: 'admin'
     }
   },
   { timestamp: true }
@@ -57,7 +61,7 @@ userSchema.pre("save", function (next) {
 });
 
 
-userSchema.static("matchPasswordAndGenerateToken", async function(email, password){
+userSchema.static("matchPasswordAndGenerateTokenForUser", async function(email, password){
     const user = await this.findOne({ email })
 
     if(!user) throw new Error('User Not Found!')

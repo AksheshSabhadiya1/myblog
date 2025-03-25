@@ -1,3 +1,4 @@
+const Admin = require('../models/admin')
 const Blog = require('../models/blog')
 const Comment = require('../models/comment')
 const User = require('../models/user')
@@ -10,6 +11,7 @@ const getuserSignup = (req, res) => {
 const postuserSignup = async(req, res) => {
   const { fullName, email, password, role } = req.body;
   const imagepath = req.file ? `/profile/${req.file.filename}` : '/images/default_profile.png'
+ 
   await User.create({
     fullName,
     email,
@@ -32,14 +34,14 @@ const postuserSignin = async (req, res) => {
 
   if(user.isApproved === true) {
     try {
-      const token = await User.matchPasswordAndGenerateToken(email, password);
+      const token = await User.matchPasswordAndGenerateTokenForUser(email, password);
       if(token) await User.findOneAndUpdate({email: email}, {isLogin: true})
       return res.cookie("token", token).redirect("/");    
     } catch (error) {
-      return res.status(401).render('signin',{ error: "Invalid Email or Password"})
+      return res.status(404).render('signin',{ error: "Invalid Email or Password"})
     } 
   } else {
-    return res.render('homepage',{ waitingMsg: "Wait for superadmin Approval" })
+    return res.render('homepage',{ waitingMsg: "Wait for Admin Approval" })
   }
 }
 
@@ -50,8 +52,8 @@ const userLogout = async(req, res)=>{
 }
 
 const deleteUser = async(req, res)=>{
-  await Blog.deleteMany({ createdBy: req.params.userid })
   await Comment.deleteMany({ createdBy: req.params.userid })
+  await Blog.deleteMany({ createdBy: req.params.userid })
   await User.deleteOne({ _id: req.params.userid })
 
   return res.clearCookie('token').redirect('/')

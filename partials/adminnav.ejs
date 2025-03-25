@@ -1,0 +1,98 @@
+<nav class="navbar navbar-expand-lg bg-dark border-bottom border-body bg-body-tertiary" data-bs-theme="dark">
+  <div class="container-fluid">
+    <a class="navbar-brand text-white" href="/">MyBlog</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown"
+      aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarNavDropdown">
+      
+      <% if(!locals.user) { %>
+      <ul class="navbar-nav me-auto">
+        <li class="nav-item">
+          <a class="nav-link active text-white" aria-current="page" href="/admin">AdminHome</a>
+        </li>
+        <% if (locals.admin) { %>
+          <li class="nav-item">
+              <a class="nav-link text-white" href="/admin/alluser">Users</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link text-white" href="/admin/allblog">Blogs</a>
+          </li>
+          <% } else { %>
+            <li class="nav-item">
+              <a class="nav-link text-white" href="/admin/signup">Create Account</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link text-white" href="/admin/signin">Signin</a>
+            </li>
+            <% } %>
+          </ul>
+          
+
+          <% if (locals.admin) { %>
+            <ul class="navbar-nav ms-auto">
+              <li class="nav-item dropdown d-flex align-items-center">
+                <img src="<%= admin.profileImage %>" class="rounded-circle border me-2" width="40" height="40"
+                  alt="Profile Image" />
+                <a class="nav-link dropdown-toggle text-white" href="#" role="button" data-bs-toggle="dropdown"
+                  aria-expanded="false">
+                  <%= admin.fullName %>
+                </a>
+                <ul class="dropdown-menu dropdown-menu-end">
+                  <li><a class="dropdown-item" href="/admin/logout/<%= admin._id %>">Logout</a></li>
+                  <li><a class="dropdown-item bg-danger text-white rounded" href="/admin/delete/<%= admin._id %>">Delete Admin</a></li>
+                </ul>
+              </li>
+            </ul>
+            <% } %>
+          <% } %>
+    </div>
+  </div>
+</nav>
+
+<% if (locals.error) { %>
+  <div class="container mt-2 w-50 rounded">
+    <div class="alert alert-danger alert-dismissible fade show" id="Alert" role="alert">
+      <%= locals.error %>
+    </div>
+  </div>
+  <% } %>
+  
+<% if (locals.success) { %>
+    <div class="container mt-2 w-50 rounded">
+      <div class="alert alert-success alert-dismissible fade show" id="Alert" role="alert">
+        <%= locals.success %>
+      </div>
+  </div>
+<% } %>
+
+<% if (locals.msg) { %>
+    <div class="container mt-2 w-50 rounded">
+      <div class="alert alert-danger alert-dismissible fade show"  id="Alert" role="alert">
+        <%= locals.msg %>
+      </div>
+    </div>
+<% } %>
+
+<% if (locals.waitingMsg) { %>
+    <div class="container mt-2 w-50 rounded">
+      <div class="alert alert-warning alert-dismissible fade show" id="Alert" role="alert">
+        <%= locals.waitingMsg %> 
+      </div>
+    </div>
+<% } %>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () =>{
+    setTimeout(() => {
+      const alertBox = document.getElementById('Alert');
+      if (alertBox) {
+        alertBox.classList.remove('show');
+        alertBox.classList.add('fade');
+        setTimeout(() => alertBox.remove(), 500); 
+      }
+    }, 1800);
+  })
+</script>

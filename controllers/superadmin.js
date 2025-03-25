@@ -10,7 +10,6 @@ const getsuperadmin = async(req, res, next)=>{
   const allComment = await Comment.find({})
 
   if(superadmindata === null){
-    console.log("true");
       await SuperAdmin.create({
         fullName: 'superadmin',
         email: 'superadmin@gmail.com',

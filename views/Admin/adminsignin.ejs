@@ -1,16 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <%- include('../partials/head') %>
+  <%- include('../../partials/head') %>
   <title>Signin</title>
 </head>
 <body class="bg-dark-subtle">
-  <%- include('../partials/superadminnav') %>
+  <%- include('../../partials/adminnav') %>
 
   <div class="container d-flex justify-content-center mt-5">
     <div class="card shadow-lg p-4" style="max-width: 400px; width: 100%;">
       <h2 class="text-center text-primary mb-4">Sign In</h2>
-      <form action="/superadmin/signin" method="post">
+      <form action="/admin/signin" method="post">
         <div class="mb-3">
           <label for="exampleInputEmail1" class="form-label">Email address</label>
           <input type="email" class="form-control" id="exampleInputEmail1" name="email" aria-describedby="emailHelp" required>
@@ -25,6 +25,6 @@
     </div>
   </div>
 
-  <%- include('../partials/script') %>
+  <%- include('../../partials/script') %>
 </body>
 </html>
