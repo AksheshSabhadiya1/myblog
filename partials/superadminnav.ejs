@@ -1,12 +1,12 @@
-<nav class="navbar navbar-expand-lg bg-dark border-bottom border-body bg-body-tertiary" data-bs-theme="dark">
+<nav class="navbar navbar-expand-lg bg-dark border-bottom border-body" data-bs-theme="dark">
   <div class="container-fluid">
-    <a class="navbar-brand text-white" href="/">MyBlog</a>
+    <a class="navbar-brand text-white" href="/superadmin">MyBlog</a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown"
       aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
 
-    <div class="collapse navbar-collapse" id="navbarNavDropdown">
+    <div class="collapse navbar-collapse">
       
       <% if(!locals.user) { %>
       <ul class="navbar-nav me-auto">
@@ -14,20 +14,40 @@
           <a class="nav-link active text-white" aria-current="page" href="/superadmin">SuperAdminHome</a>
         </li>
         <% if (locals.superadmin) { %>
-          <li class="nav-item">
-              <a class="nav-link text-white" href="/superadmin/alluser">Users</a>
-          </li>
+          <div class="container-fluid">
+            <div class="collapse navbar-collapse">
+              <ul class="navbar-nav">
+                <li class="nav-item dropdown">
+                  <button class="btn btn-dark dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                    Admins
+                  </button>
+                  <ul class="dropdown-menu">
+                    <li><a class="dropdown-item" href="/superadmin/allApprovedAdmin">Approved Admin</a></li>
+                    <li><a class="dropdown-item" href="/superadmin/allNotApprovedAdmin">NotApproved Admin</a></li>
+                  </ul>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="container-fluid">
+            <div class="collapse navbar-collapse">
+              <ul class="navbar-nav">
+                <li class="nav-item dropdown">
+                  <button class="btn btn-dark dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                    Users
+                  </button>
+                  <ul class="dropdown-menu">
+                    <li><a class="dropdown-item" href="/superadmin/allApprovedUser">Approved User</a></li>
+                    <li><a class="dropdown-item" href="/superadmin/allNotApprovedUser">NotApproved User</a></li>
+                  </ul>
+                </li>
+              </ul>
+            </div>
+          </div>
           <li class="nav-item">
             <a class="nav-link text-white" href="/superadmin/allblog">Blogs</a>
           </li>
-          <% } else { %>
-            <li class="nav-item">
-              <a class="nav-link text-white" href="/superadmin/signup">Create Account</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link text-white" href="/superadmin/signin">Signin</a>
-            </li>
-            <% } %>
+          <% } %>
           </ul>
           <% } %>
     </div>

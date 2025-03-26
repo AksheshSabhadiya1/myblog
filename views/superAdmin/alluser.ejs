@@ -9,8 +9,10 @@
 
   <div class="container py-4">
     <div class="row g-4">
-      <% if (locals.superadmin) { %>       
+      <% if (locals.superadmin) { %> 
         <% alluser?.forEach(user => { %>
+          <% alladmin?.forEach(admin => { %>
+          <% if ( !user.adminId || user.adminId.toString() === admin._id.toString()) { %>
           <div class="col-12 col-sm-6 mb-0 col-md-4 col-lg-3">
             <div class="card h-100 shadow-sm">
               <div class="card-header bg-white text-center position-relative">
@@ -21,21 +23,69 @@
                 <p><strong>Full Name:</strong> <%= user.fullName %></p>
                 <p><strong>Email:</strong> <%= user.email %></p>
                 <p><strong>Role:</strong> <%= user.role %></p>
+
+                <% if (user.isApproved !== true) { %>
+                  <form action="/superadmin/assignAdmin" method="post">
+                    <p class="d-flex">
+                      <strong>Admin Name:</strong><input type="text" name="adminname" id="adminname" placeholder="Enter Admin Name"
+                      value="<%= user.adminId ? admin.fullName : '' %>" <%= user.adminId ? 'readOnly' : '' %> required />
+                    </p>
+                    <p class="d-flex">
+                      <strong>Admin Email:</strong><input type="email" name="adminemail" id="adminemail" placeholder="Enter Admin Email"
+                        value="<%= user.adminId ? admin.email : '' %>" <%= user.adminId ? 'readOnly' : '' %> required />
+                    </p>
+                    <input type="hidden" name="useremail" value="<%= user.email %>" />
+                      <button type="button" id="editbtn" onclick="toggleEdit()" value="Save" class="btn btn-success rounded fst-normal text-center px-2 py-1 mb-2">
+                        Save
+                      </button>
+                      
+                  </form>
+                <% } else { %>
+                <p><strong>Admin Name:</strong><%= admin.fullName %></p>
+                <p><strong>Admin Email:</strong><%= admin.email %></p>
+                <% } %>
                 <p>
-                  <strong>isApproved:</strong>
-                  <a href="/superadmin/isapproved/<%= user._id %>" class="btn btn-sm <%= user.isApproved ? 'btn-success' : 'btn-warning' %>">
+                  <strong>Approved:</strong>
+                  <a href="/superadmin/approvedUser/<%= user._id %>" class="btn btn-sm <%= user.isApproved ? 'btn-success' : 'btn-warning' %>">
                     <%= user.isApproved ? 'Yes ✅' : 'No ❌' %>
                   </a>
                 </p>
-                <div class="d-flex"><strong class="mt-2">isLogin:</strong><p class="<%= user.isLogin ? 'bg-success text-white bg-opacity-75' : 'bg-warning bg-opacity-50' %> rounded fst-normal text-center mx-1 m-1 px-2 py-1 mb-0"><%= user.isLogin ? 'Yes ✅' : 'No ❌' %></p> </div>
+                <div class="d-flex"><strong class="mt-2">Status:</strong><p class="<%= user.isLogin ? 'bg-success text-white bg-opacity-75' : 'bg-warning bg-opacity-50' %> rounded fst-normal text-center mx-1 m-1 px-2 py-1 mb-0"><%= user.isLogin ? 'Online ✅' : 'Offline ❌' %></p> </div>
               </div>
             </div>
           </div>
+          <% } %>
+        <% }) %>
         <% }) %>
       <% } %>
     </div>
   </div>
 
   <%- include('../../partials/script') %>
+  <script>
+    function toggleEdit(userid) {
+      const adminname = document.getElementById('adminname')
+      const adminemail = document.getElementById('adminemail')
+      const editbtn = document.getElementById('editbtn')
+
+      console.log(editbtn.value);
+
+      if(adminname.readOnly){
+        adminname.removeAttribute('readOnly')
+        adminemail.removeAttribute('readOnly')
+      }
+
+      if(editbtn.value === 'Save'){
+        editbtn.innerText = 'Update'
+        editbtn.setAttribute('value') = 'Update'
+        document.getElementById('editbtn').value = 'Update'
+      } else if(editbtn.value === 'Update') {
+        editbtn.innerText = 'Save'
+        editbtn.setAttribute('value') = 'Save'
+        document.getElementById('editbtn').value = 'Save'
+        editbtn.type = "submit"
+      }
+    }
+  </script>
 </body>
 </html>

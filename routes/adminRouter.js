@@ -3,6 +3,7 @@ const Admin = require('../models/admin')
 const Blog = require('../models/blog')
 const User = require('../models/user')
 const Comment = require('../models/comment')
+// const {getApprovedRequest} = require('../controllers/superadmin')
 const adminRouter = Router()
 
 
@@ -47,43 +48,41 @@ adminRouter.post('/signin', async(req, res)=>{
 
   if(!admin) return res.status(401).render('adminsignup', {error: "Admin Not Found"})
 
+  if(admin.isApproved === true) {
   try {
     const admintoken = await Admin.matchPasswordAndGenerateTokenForAdmin(email, password)
-    
+    if(admintoken) await Admin.findOneAndUpdate({email: email}, {isLogin: true})
     return res.cookie("admintoken", admintoken).redirect('/admin')
     
   } catch (error) {
     return res.status(404).render('adminsignin',{error: "Invalid Email or Password"})
   }
+  }else {
+    return res.render('adminpage',{ waitingMsg: "Wait for SuperAdmin Approval" })
+  }
 })
 
 
-adminRouter.get('/alluser', async(req, res)=>{
-  const admindata = await Admin.findOne({})
-  const alluser = await User.find({})
+adminRouter.get('/users', async(req, res)=>{
+  const admindata = await Admin.findOne({_id: req.admin._id})
+  const alluser = await User.find({adminId: admindata._id})
 
-  return res.render("alluser", {admin: admindata, alluser: alluser});
+  return res.render("user", {admin: admindata, alluser: alluser});
 })
 
-adminRouter.get('/allblog',async(req, res)=>{
-  const admindata = await Admin.findOne({})
-  const allblog = await Blog.find({})
-  const alluser = await User.find({})
+adminRouter.get('/blogs',async(req, res)=>{
+  const admindata = await Admin.findOne({_id: req.admin._id})
+  const alluser = await User.find({adminId: admindata._id})
+  const allblog = await Blog.find({ createdBy: {$in: alluser.map(user=> user._id)}})
   const allComment = await Comment.find({})
 
-  return res.render("allblog", {admin: admindata, allblog: allblog, alluser: alluser, allComment: allComment});
+  return res.render("blog", {admin: admindata, allblog: allblog, alluser: alluser, allComment: allComment});
 })
 
 
-adminRouter.get('/isApproved/:userid', async(req, res)=>{
-  const user = await User.findById(req.params.userid)
-  await User.findByIdAndUpdate(req.params.userid, {isApproved: !user.isApproved, adminId: req.admin._id})
-
-  return res.redirect('/admin/alluser')
-})
-
-
-adminRouter.get('/logout/:userid', async(req, res)=>{
+adminRouter.get('/logout', async(req, res)=>{
+  await Admin.findOneAndUpdate({ _id: req.params.userid }, {isLogin: false} ) 
+  
   return res.clearCookie('admintoken').redirect('/admin')
 })
 

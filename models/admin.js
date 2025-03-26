@@ -23,6 +23,14 @@ const adminSchema = new Schema(
       type: String,
       default: "/images/profile_avatar.png",
     },
+    isApproved: {
+      type: Boolean,
+      default: false,
+    },
+    isLogin:{
+      type: Boolean,
+      default: false
+    },
     role: {
       type: String,
       enum: ["admin"],

@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <%- include('../../partials/head') %>
+  <title>All Users</title>
+</head>
+<body class="bg-dark-subtle">
+  <%- include('../../partials/superadminnav') %>
+
+  <div class="container py-4">
+    <div class="row g-4">
+      <% if (locals.superadmin) { %> 
+        <% alladmin?.forEach(admin => { %>
+          <div class="col-12 col-sm-6 mb-0 col-md-4 col-lg-3">
+            <div class="card h-100 shadow-sm">
+              <div class="card-header bg-white text-center position-relative">
+                <img src="<%= admin.profileImage %>" class="rounded-circle border border-secondary" width="80" height="80" alt="Profile Image">
+                <a href="/superadmin/delete/<%= admin._id %>" class="btn btn-sm bg-danger-subtle position-absolute top-0 end-0 m-2">❌</a>
+              </div>
+              <div class="card-body">
+                <p><strong>Full Name:</strong> <%= admin.fullName %></p>
+                <p><strong>Email:</strong> <%= admin.email %></p>
+                <p><strong>Role:</strong> <%= admin.role %></p>
+                <p>
+                  <strong>Approved:</strong>
+                  <a href="/superadmin/approvedAdmin/<%= admin._id %>" class="btn btn-sm <%= admin.isApproved ? 'btn-success' : 'btn-warning' %>">
+                    <%= admin.isApproved ? 'Yes ✅' : 'No ❌' %>
+                  </a>
+                </p>
+                <div class="d-flex"><strong class="mt-2">Status:</strong><p class="<%= admin.isLogin ? 'bg-success text-white bg-opacity-75' : 'bg-warning bg-opacity-50' %> rounded fst-normal text-center mx-1 m-1 px-2 py-1 mb-0"><%= admin.isLogin ? 'Online ✅' : 'Offline ❌' %></p> </div>
+              </div>
+            </div>
+          </div>
+        <% }) %>
+      <% } %>
+    </div>
+  </div>
+
+  <%- include('../../partials/script') %>
+</body>
+</html>

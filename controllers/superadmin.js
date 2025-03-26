@@ -1,7 +1,8 @@
 const SuperAdmin = require('../models/superadmin')
 const User = require('../models/user');
 const Blog = require('../models/blog');
-const Comment = require('../models/comment')
+const Comment = require('../models/comment');
+const Admin = require('../models/admin');
 
 const getsuperadmin = async(req, res, next)=>{
   const superadmindata = await SuperAdmin.findOne({})
@@ -24,11 +25,20 @@ const getsuperadmin = async(req, res, next)=>{
 }
 
 
-const getAlluser = async(req, res)=>{
+const getAllApprovedUser = async(req, res)=>{
   const superadmindata = await SuperAdmin.findOne({})
-  const alluser = await User.find({})
+  const alladmin = await Admin.find({},{fullName:1, email:1})
+  const alluser = await User.find({isApproved: true})
 
-  return res.render("alluser", {superadmin: superadmindata, alluser: alluser});
+  return res.render("alluser", {superadmin: superadmindata, alluser, alladmin});
+}
+
+const getAllNotApprovedUser = async(req, res)=>{
+  const superadmindata = await SuperAdmin.findOne({})
+  const alladmin = await Admin.find({})
+  const alluser = await User.find({isApproved: false})
+
+  return res.render("alluser", {superadmin: superadmindata, alluser, alladmin});
 }
 
 const getAllblog = async(req, res)=>{
@@ -37,14 +47,50 @@ const getAllblog = async(req, res)=>{
   const alluser = await User.find({})
   const allComment = await Comment.find({})
 
-  return res.render("allblog", {superadmin: superadmindata, allblog: allblog, alluser: alluser, allComment: allComment});
+  return res.render("allblog", {superadmin: superadmindata, allblog, alluser, allComment});
 } 
 
-const getApproved = async(req, res)=>{
+const getAllApprovedAdmin = async(req, res)=>{
+  const superadmindata = await SuperAdmin.findOne({})
+  const alladmin = await Admin.find({isApproved: true})
+
+  return res.render("alladmin", {superadmin: superadmindata, alladmin});
+}
+
+const getAllNotApprovedAdmin = async(req, res)=>{
+  const superadmindata = await SuperAdmin.findOne({})
+  const alladmin = await Admin.find({isApproved: false})
+
+  return res.render("alladmin", {superadmin: superadmindata, alladmin});
+}
+
+const getApprovedUser = async(req, res)=>{
   const user = await User.findById(req.params.userid)
   await User.findByIdAndUpdate(req.params.userid, {isApproved: !user.isApproved})
 
-  return res.redirect('/superadmin/alluser')
+  return res.redirect('/superadmin/allApprovedUser')
+}
+
+const postassignAdmin = async(req, res) => {
+  const {adminname, adminemail, useremail} = req.body
+  const admin = await Admin.findOne({fullName: adminname, email: adminemail})
+
+  if(!admin) return res.render('alluser',{error: "Admin not Found"})
+
+  const user = await User.findOneAndUpdate({email: useremail}, {adminId: admin._id})
+  
+
+  return res.redirect('/superadmin/allNotApprovedUser')
+}
+
+const getApprovedAdmin = async(req, res)=>{
+  const admin = await Admin.findById(req.params.adminid)
+  const updateadmin = await Admin.findByIdAndUpdate(req.params.adminid, {isApproved: !admin.isApproved})
+  if(updateadmin.isApproved !== true){
+    return res.redirect('/superadmin/allApprovedAdmin')
+  } else {
+    return res.redirect('/superadmin/allNotApprovedAdmin')
+  }
 }
 
 const deleteUser = async(req, res)=>{
@@ -56,4 +102,4 @@ const deleteUser = async(req, res)=>{
 }
 
 
-module.exports = {getsuperadmin, getAlluser, getAllblog, getApproved, deleteUser }
+module.exports = {getsuperadmin, getAllApprovedUser, getAllNotApprovedUser, getAllblog, getAllApprovedAdmin, getAllNotApprovedAdmin, getApprovedUser, postassignAdmin, getApprovedAdmin, deleteUser}

@@ -11,7 +11,6 @@
     <div class="row g-4">
       <% if (locals.admin) { %>       
         <% alluser?.forEach(user => { %>
-        <% if(user.adminId.toString() === admin._id.toString()) { %>
           <div class="col-12 col-sm-6 mb-0 col-md-4 col-lg-3">
             <div class="card h-100 shadow-sm">
               <div class="card-header bg-white text-center position-relative">
@@ -23,16 +22,15 @@
                 <p><strong>Email:</strong> <%= user.email %></p>
                 <p><strong>Role:</strong> <%= user.role %></p>
                 <p>
-                  <strong>isApproved:</strong>
-                  <a href="/admin/isapproved/<%= user._id %>" class="btn btn-sm <%= user.isApproved ? 'btn-success' : 'btn-warning' %>">
+                  <strong>Approved:</strong>
+                  <a class="btn btn-sm <%= user.isApproved ? 'btn-success' : 'btn-warning' %>">
                     <%= user.isApproved ? 'Yes ✅' : 'No ❌' %>
                   </a>
                 </p>
-                <div class="d-flex"><strong class="mt-2">isLogin:</strong><p class="<%= user.isLogin ? 'bg-success text-white bg-opacity-75' : 'bg-warning bg-opacity-50' %> rounded fst-normal text-center mx-1 m-1 px-2 py-1 mb-0"><%= user.isLogin ? 'Yes ✅' : 'No ❌' %></p> </div>
+                <div class="d-flex"><strong class="mt-1">Status:</strong><a class="btn btn-sm <%= user.isLogin ? 'btn-success' : 'btn-warning' %> rounded fst-normal text-center mx-1 m-1 px-2 py-1 mb-0"><%= user.isLogin ? 'Online ✅' : 'Offline ❌' %></a> </div>
               </div>
             </div>
           </div>
-          <% } %>
         <% }) %>
       <% } %>
     </div>
